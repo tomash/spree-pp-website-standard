@@ -4,12 +4,10 @@ Overrides the default Spree checkout process and uses offsite payment processing
 
 You'll want to test this using a paypal sandbox account first.  Once you have a business account, you'll want to turn on Instant Payment Notification (IPN).  This is how your application will be notified when a transaction is complete.  Certain transactions aren't completed immediately.  Because of this we use IPN for your application to get notified when the transaction is complete.  IPN means that our application gets an incoming request from Paypal when the transaction goes through.  
 
-__IMPORTANT__
-Older versions of this extension mentioned configuring your notify url in the PP profile.  This no longer seems to be necessary, and in fact, if you have previously configured your URL as one that ends in `notify` then you are using an outdated return URL.  Just clear it out.  The notify URL is now being posted with the checkout form and should be sufficient.
+Regarding Taxes, we assumed you'd want to use Paypal's system for this, which can also be configured through the "profile" page. Shipping cost is being calculated and sent to PayPal along with order contents.
 
-Regarding Taxes and shipping, we assumed you'd want to use Paypal's system for this, which can also be configured through the "profile" page.  Taxes have been tested (sales tax), but not shipping, so you may want to give that a test run on the sandbox.
 
-You may want to implement your own custom logic by adding `state_machine` hooks.  Just add these hooks in your site extension (don't change the `pp_website_standard` extension.) Here's an example of how to add the hooks to your site extension.
+You may want to implement your own custom logic by adding 'state_machine' hooks.  Just add these hooks in your site extension (don't change the 'pp_website_standard' extension.) Here's an example of how to add the hooks to your site extension.
 
 
     fsm = Order.state_machines['state']  
@@ -29,30 +27,18 @@ You may want to implement your own custom logic by adding `state_machine` hooks.
 
 ## Configuration
 
-Be sure to configure the following configuration parameters.  
+Be sure to configure the following configuration parameters. Preferably put it in initializer like config/initializers/my_store.rb.  
 
-Example
+Example:
 
     Spree::Paypal::Config[:account] = "foo@example.com"
     Spree::Paypal::Config[:ipn_notify_host] = "http://123.456.78:3000"
     Spree::Paypal::Config[:success_url] = "http://localhost:3000/checkout/success"
 
-Or even better, you can configure these in a migration for your site extension.
-
-    class AddPaypalStandardConfigurations < ActiveRecord::Migration
-      def self.up
-        Spree::Paypal::Config.set(:account => "foo@example.com")
-        Spree::Paypal::Config.set(:ipn_notify_host => "http://123.456.78:3000")
-        Spree::Paypal::Config.set(:success_url => "http://localhost:3000/checkout/success")
-      end
-    
-      def self.down
-      end
-    end
 
 ## Installation 
 
-    script/extension install git://github.com/Gregg/spree-pp-website-standard.git  
+    Add to your Spree application Gemfile.  
 
 ## IPN Notes
 
