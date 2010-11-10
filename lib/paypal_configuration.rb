@@ -9,6 +9,9 @@ class PaypalConfiguration < Configuration
   preference :ipn_notify_host, :string, :default => "http://123.456.78:3000"
   preference :success_url, :string, :default => "http://localhost:3000/checkout/success"
   
+  # this stuff is really handy
+  preference :currency_code, :string, :default => "USD"
+  
   validates_presence_of :name
   validates_uniqueness_of :name
 end

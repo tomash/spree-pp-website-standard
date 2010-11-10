@@ -1,3 +1,5 @@
+puts "loading paypal_payments controller..."
+
 class PaypalPaymentsController < Spree::BaseController
   include ActiveMerchant::Billing::Integrations
   skip_before_filter :verify_authenticity_token      
