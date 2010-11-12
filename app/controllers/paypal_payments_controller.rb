@@ -55,8 +55,11 @@ class PaypalPaymentsController < Spree::BaseController
   end
 
   # Action for handling the "return to site" link after user completes the transaction on the Paypal website.  
-  def successful 
-    @order.update_attribute("ip_address", request.env['REMOTE_ADDR'] || "unknown")
+  def successful
+    # order doesn't have ip_address writable attribute now
+    # @order.update_attribute("ip_address", request.env['REMOTE_ADDR'] || "unknown")
+    
+    
     # its possible that the IPN has already been received at this point so that
     if @order.paypal_payments.empty?
       # create a payment and record the successful transaction
