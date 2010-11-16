@@ -19,7 +19,8 @@
   <!-- input id="amount" name="amount" type="hidden" value="58.97" /-->
   
   <input id="currency_code" name="currency_code" type="hidden" value="<%= Spree::Paypal::Config[:currency_code] %>" />
-  <input id="handling_cart" name="handling_cart" type="hidden" value="<%= @order.shipment_cost %>" /> 
+  <input id="handling_cart" name="handling_cart" type="hidden" value="<%= @order.ship_total %>" /> 
+  <input id="tax_cart"      name="tax_cart"      type="hidden" value="<%= @order.tax_total %>" />
   
   <!-- <input name="no_shipping" type="hidden" value="1" /> -->
   
