@@ -1,5 +1,3 @@
-puts "orders controller decorator loading"
-
 # Add a partial for PaypalPayment txns
 Admin::OrdersController.class_eval do
   before_filter :add_pp_standard_txns, :only => :show

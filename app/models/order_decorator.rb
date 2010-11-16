@@ -1,5 +1,3 @@
-puts "order model decorator loading..."
-
 Order.class_eval do 
   has_many :paypal_payments
   
