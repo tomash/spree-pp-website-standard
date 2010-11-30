@@ -11,7 +11,11 @@
   <input id="invoice" name="invoice" type="hidden" value="<%= @order.number %>" />
   
   <% @order.line_items.each_with_index do |item, index| %>
-    <input id="item_name_<%= index + 1 %>" name="item_name_<%= index + 1 %>" type="hidden" value="<%= item.variant.product.name %>" />
+    <%- if Spree::Paypal::Config[:include_option] %>
+      <input id="item_name_<%= index + 1 %>" name="item_name_<%= index + 1 %>" type="hidden" value="<%= "#{item.variant.product.name} (#{variant_options(item.variant)})" %>" />
+    <% else %>
+      <input id="item_name_<%= index + 1 %>" name="item_name_<%= index + 1 %>" type="hidden" value="<%= item.variant.product.name %>" />
+    <% end %>
     <input id="amount_<%= index + 1 %>" name="amount_<%= index + 1 %>" type="hidden" value="<%= item.price %>" />
     <input id="quantity_<%= index + 1 %>" name="quantity_<%= index + 1 %>" type="hidden" value="<%= item.quantity %>" />
   <% end %>
