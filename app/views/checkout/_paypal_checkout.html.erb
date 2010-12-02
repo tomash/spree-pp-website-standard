@@ -20,13 +20,9 @@
     <input id="quantity_<%= index + 1 %>" name="quantity_<%= index + 1 %>" type="hidden" value="<%= item.quantity %>" />
   <% end %>
   
-  <!-- input id="amount" name="amount" type="hidden" value="58.97" /-->
-  
   <input id="currency_code" name="currency_code" type="hidden" value="<%= Spree::Paypal::Config[:currency_code] %>" />
   <input id="handling_cart" name="handling_cart" type="hidden" value="<%= @order.ship_total %>" /> 
   <input id="tax_cart"      name="tax_cart"      type="hidden" value="<%= @order.tax_total %>" />
-  
-  <!-- <input name="no_shipping" type="hidden" value="1" /> -->
   
   
   <input id="cmd" name="cmd" type="hidden" value="_cart" />
@@ -35,13 +31,23 @@
   <input type="hidden" name="rm" value ="2"> <!-- tells paypal that the return should be POST instead of GET -->
   <input id="return" name="return" type="hidden" value="<%= Spree::Paypal::Config[:success_url] %>" />
   
-  <!-- input id="address_override" name="address_override" type="hidden" value="0" />
   <input id="charset" name="charset" type="hidden" value="utf-8" />
+  
+  <% if(Spree::Paypal::Config[:populate_address] && @order.bill_address) %>
+    <input type="hidden"  name="address1"  id="address1" value="<%= @order.bill_address.address1 %>" />
+    <input type="hidden"  name="address2"  id="address2" value="<%= @order.bill_address.address2 %>" />
+    <input type="hidden"  name="city"      id="city"     value="<%= @order.bill_address.city %>"     />
+    <input type="hidden"  name="country"   id="country"  value="<%= @order.bill_address.country.iso %>" />
+    <input type="hidden"  name="email"     id="email"    value="<%= @order.email %>"                 />
+    <input type="hidden"  name="first_name"  id="first_name" value="<%= @order.bill_address.firstname %>" />
+    <input type="hidden"  name="last_name"   id="last_name"  value="<%= @order.bill_address.lastname %>"  />
+    <input type="hidden"  name="zip"       id="zip"      value="<%= @order.bill_address.zipcode %>"     />
+  <% end %>
+  
+  <!-- input id="address_override" name="address_override" type="hidden" value="0" />
   <input id="no_note" name="no_note" type="hidden" value="1" />
   <input id="no_shipping" name="no_shipping" type="hidden" value="1" />
   <input id="item_name" name="item_name" type="hidden" value="Store purchase" />
-  <input id="return" name="return" type="hidden" value="http://localhost:3000/account/show" />
-  <input id="currency_code" name="currency_code" type="hidden" value="USD" />
   <input id="cancel_return" name="cancel_return" type="hidden" value="http://localhost:3000/account/show" />
   <input id="custom" name="custom" type="hidden" value="11" />
   <input id="item_number" name="item_number" type="hidden" value="11" / -->
