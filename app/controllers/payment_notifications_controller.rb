@@ -1,4 +1,4 @@
-class PaypalPaymentNotificationsController < CheckoutController
+class PaymentNotificationsController < CheckoutController
   protect_from_forgery :except => [:create]
   skip_before_filter :restriction_access  
   
