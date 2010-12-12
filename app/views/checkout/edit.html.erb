@@ -1,0 +1,28 @@
+<% content_for :head do %>
+  <%= javascript_include_tag  'checkout', '/states' %>
+<% end %>
+<div id="checkout">
+  <h1><%= t("checkout")%></h1>
+  <%= checkout_progress %>
+  <br clear="left" />
+  <%= render "shared/error_messages", :target => @order %>
+  <%= hook :checkout_summary_box do %>
+    <div id="checkout-summary">
+      <%= render 'summary', :order => @order %>
+    </div>
+  <% end %>
+
+
+  <% if(@order.state == "payment") %>
+        <%= render('checkout/paypal_checkout') if @order.payable_via_pay_pal?  %>
+  <% else %>
+      <%= form_for @order, :url => update_checkout_path(@order.state), :html => { :id => "checkout_form_#{@order.state}" } do |form| %>
+        <%= render @order.state, :form => form %>
+        <input id="post-final" type="submit" style="display:none"/>
+      <% end %>
+  <% end %>
+</div>
+
+<div id="payment_step">
+
+</div>
