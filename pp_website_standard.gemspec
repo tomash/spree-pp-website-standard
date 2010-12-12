@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'pp_website_standard'
-  s.version     = '0.7.0'
+  s.version     = '0.7.5'
   s.summary     = 'Spree integration with PayPal Website Standard payment'
   #s.description = 'Add (optional) gem description here'
   s.required_ruby_version = '>= 1.8.7'
