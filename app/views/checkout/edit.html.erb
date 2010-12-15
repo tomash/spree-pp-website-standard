@@ -14,7 +14,7 @@
 
 
   <% if(@order.state == "payment") %>
-        <%= render('checkout/paypal_checkout') if @order.payable_via_pay_pal?  %>
+        <%= render('checkout/paypal_checkout') if @order.payable_via_paypal?  %>
   <% else %>
       <%= form_for @order, :url => update_checkout_path(@order.state), :html => { :id => "checkout_form_#{@order.state}" } do |form| %>
         <%= render @order.state, :form => form %>
