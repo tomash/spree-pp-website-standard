@@ -5,7 +5,7 @@
 CheckoutController.class_eval do
   
   def edit
-    if (@order.valid? && @order.state == "payment")
+    if ((@order.state == "payment") && @order.valid?)
       puts "valid, processing"
       if @order.payable_via_paypal?
         puts "payable via paypal, adding payment"
