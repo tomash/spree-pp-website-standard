@@ -14,6 +14,14 @@ class PaymentNotificationsController < ApplicationController
     Order.transaction do
       # main part of hacks
       order = @order
+
+      #create payment for this order
+      payment = Payment.new
+      payment.amount = order.total
+      payment.payment_method = Order.paypal_payment_method
+      order.payments << payment
+      payment.started_processing
+
       order.payment.complete
       logger.info("order #{order.number} (#{order.id}) -- completed payment")
       while order.state != "complete"
