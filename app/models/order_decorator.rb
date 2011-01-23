@@ -10,6 +10,6 @@ Order.class_eval do
   end
 
   def self.paypal_payment_method
-    PaymentMethod.available(:front_end).select{ |pm| pm if pm.name.downcase =~ /paypal/}.first
+    PaymentMethod.select{ |pm| pm if pm.name.downcase =~ /paypal/}.first
   end
 end
