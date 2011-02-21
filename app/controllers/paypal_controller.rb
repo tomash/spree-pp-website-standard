@@ -15,6 +15,8 @@ class PaypalController < CheckoutController
          state_callback(:after)
       end
       #order.finalize!
+      flash[:notice] = I18n.t(:order_processed_successfully)
+      flash[:commerce_tracking] = "nothing special"
       redirect_to order_path(current_order)
     end
   end
