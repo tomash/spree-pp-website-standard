@@ -59,12 +59,12 @@ The following configuration options (keys) can be set:
     :account         # email account of store 
     :ipn_notify_host # host prepared to receive IPN notifications
     :success_url     # url the customer is redirected to after successfully completing payment
-    :currency_code   #  
-    :sandbox_url     # paypal url in sandbox mode: https://www.sandbox.paypal.com/cgi-bin/webscr
-    :paypal_url      # paypal url in production:   https://www.paypal.com/cgi-bin/webscr
+    :currency_code   # default EUR
+    :sandbox_url     # paypal url in sandbox mode, default https://www.sandbox.paypal.com/cgi-bin/webscr
+    :paypal_url      # paypal url in production, default https://www.paypal.com/cgi-bin/webscr
     :populate_address (true/false) # pre-populate fields of billing address based on spree order data
 
-The ones that should be given sensible defaults (sandbox_url, paypal_url, currency_code) will get ones. Soon.
+Only the first three ones need to be set up in order to get running.
 
 
 ## IPN Notes (outdated!)
