@@ -50,14 +50,12 @@ Be sure to configure the following configuration parameters. Preferably put it i
 Example:
 
     Spree::Paypal::Config.set(:account => "foo@example.com") 
-    Spree::Paypal::Config.set(:ipn_notify_host => "http://example.com:3000")
     Spree::Paypal::Config.set(:success_url => "http://localhost:3000/paypal/confirm")
     
 
 The following configuration options (keys) can be set:
 
     :account         # email account of store 
-    :ipn_notify_host # host prepared to receive IPN notifications
     :success_url     # url the customer is redirected to after successfully completing payment
     :currency_code   # default EUR
     :sandbox_url     # paypal url in sandbox mode, default https://www.sandbox.paypal.com/cgi-bin/webscr

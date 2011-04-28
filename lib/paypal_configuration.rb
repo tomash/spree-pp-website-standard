@@ -6,7 +6,6 @@ class PaypalConfiguration < Configuration
   
   # these are just default preferences of course, you'll need to change them to something meaningful
   preference :account, :string, :default => "foo@example.com"
-  preference :ipn_notify_host, :string, :default => "http://example.com:3000"
   preference :success_url, :string, :default => "http://localhost:3000/paypal/confirm"
   
   # this stuff is really handy
