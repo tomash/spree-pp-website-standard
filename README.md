@@ -67,6 +67,18 @@ The following configuration options (keys) can be set:
 Only the first three ones need to be set up in order to get running.
 
 
+## Encryption / Security
+
+Spree::Paypal::Config[:encrypted] must be set to true.
+Spree::Paypal::Config[:cert_id] must be set to true.
+Application must have a Rails.root/certs directory with following files:
+
+    app_cert.pem # application certificate
+    app_key.pem  # application key
+    paypal_cert_#{Rails.env}.pem # paypal certificate
+
+The best instructions on what is what, how these files should be generated etc. are [in AsciiCast 143](http://asciicasts.com/episodes/143-paypal-security) (basically the code of this extension is also based on this AsciiCast). 
+
 ## IPN Notes (outdated!)
 
 Real world testing indicates that IPN can be very slow.  If you want to test the IPN piece Paypal now has an IPN tool on their developer site.  Just use the correct URL from the hidden field on your Spree checkout screen.  In the IPN tool, change the transaction type to `cart checkout` and change the `mc_gross` variable to match your order total.
