@@ -2,7 +2,12 @@ class PaymentNotificationsController < ApplicationController
   protect_from_forgery :except => [:create]
   skip_before_filter :restriction_access  
   
-  def create  
+  def create
+    if(Spree::Paypal::Config[:encryption] && (params[:secret] != Spree::Paypal::Config[:ipn_secret]))
+      logger.info "attempt to send an IPN with invalid secret"
+      raise Exception
+    end
+    
     @order = Order.find_by_number(params[:invoice])
     PaymentNotification.create!(:params => params, 
       :order_id => @order.id,
