@@ -60,7 +60,9 @@ The following configuration options (keys) can be set:
     :currency_code   # default EUR
     :sandbox_url     # paypal url in sandbox mode, default https://www.sandbox.paypal.com/cgi-bin/webscr
     :paypal_url      # paypal url in production, default https://www.paypal.com/cgi-bin/webscr
-    :populate_address (true/false) # pre-populate fields of billing address based on spree order data
+    :populate_address # (true/false) pre-populate fields of billing address based on spree order data
+    :encrypted       # (true/false) use encrypted shopping cart (and IPN -- TODO)
+    :cert_id         # id of certificate used to encrypted stuff
 
 Only the first three ones need to be set up in order to get running.
 
