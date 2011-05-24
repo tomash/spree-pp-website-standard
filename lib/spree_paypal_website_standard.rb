@@ -1,5 +1,5 @@
 require 'spree_core'
-require 'pp_website_standard_hooks'
+require 'spree_paypal_website_standard_hooks'
 
 module SpreePaypalWebsiteStandard
   class Engine < Rails::Engine
