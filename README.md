@@ -61,16 +61,19 @@ The following configuration options (keys) can be set:
     :sandbox_url     # paypal url in sandbox mode, default https://www.sandbox.paypal.com/cgi-bin/webscr
     :paypal_url      # paypal url in production, default https://www.paypal.com/cgi-bin/webscr
     :populate_address # (true/false) pre-populate fields of billing address based on spree order data
-    :encrypted       # (true/false) use encrypted shopping cart (and IPN -- TODO)
+    :encryption      # (true/false) use encrypted shopping cart
     :cert_id         # id of certificate used to encrypted stuff
+    :ipn_secret      # secret string for authorizing IPN
 
-Only the first three ones need to be set up in order to get running.
+Only the first three ones need to be set up in order to get running. 
 
+The last three are required for secure, encrypted operation (see below).
 
 ## Encryption / Security
 
 Spree::Paypal::Config[:encrypted] must be set to true.
-Spree::Paypal::Config[:cert_id] must be set to true.
+Spree::Paypal::Config[:cert_id] must be set to a valid certificate id.
+Spree::Paypal::Config[:ipn_secret] must be set to a string considered secret.
 Application must have a Rails.root/certs directory with following files:
 
     app_cert.pem # application certificate

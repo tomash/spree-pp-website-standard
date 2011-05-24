@@ -1,7 +1,7 @@
 require 'spree_core'
 require 'pp_website_standard_hooks'
 
-module PpWebsiteStandard
+module SpreePaypalWebsiteStandard
   class Engine < Rails::Engine
 
     config.autoload_paths += %W(#{config.root}/lib)
