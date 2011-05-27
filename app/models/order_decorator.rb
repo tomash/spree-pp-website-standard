@@ -13,13 +13,13 @@ Order.class_eval do
     PaymentMethod.select{ |pm| pm.name.downcase =~ /paypal/}.first
   end
   
-  def paypal_encrypted(payment_notifications_url)
+  def paypal_encrypted(payment_notifications_url, options = {})
     values = {
       :business => Spree::Paypal::Config[:account],
       :invoice => self.number,
       :cmd => '_cart',
       :upload => 1,
-      :currency_code => Spree::Paypal::Config[:currency_code],
+      :currency_code => options[:currency_code] || Spree::Paypal::Config[:currency_code],
       :handling_cart => self.ship_total,
       :return => Spree::Paypal::Config[:success_url],
       :notify_url => payment_notifications_url,
