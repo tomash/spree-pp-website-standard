@@ -22,7 +22,14 @@ class PaymentNotificationsController < ApplicationController
 
       #create payment for this order
       payment = Payment.new
-      payment.amount = order.total
+      
+      # 1. Assume that if payment notification comes, it's exactly for the amount
+      # sent to paypal (safe assumption -- cart can't be edited while on paypal)
+      # 2. Can't use Order#total, as it's intercepted by spree-multi-currency
+      # which might lead to lots of false "credit owed" payment states
+      # (when they should be "complete")
+      payment.amount = order.read_attribute(:total)
+      
       payment.payment_method = Order.paypal_payment_method
       order.payments << payment
       payment.started_processing
