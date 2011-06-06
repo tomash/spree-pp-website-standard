@@ -4,7 +4,7 @@ class PaymentNotificationsController < ApplicationController
   
   def create
     if(Spree::Paypal::Config[:encryption] && (params[:secret] != Spree::Paypal::Config[:ipn_secret]))
-      logger.info "attempt to send an IPN with invalid secret"
+      logger.info "PayPal_Website_Standard: attempt to send an IPN with invalid secret"
       raise Exception
     end
     
@@ -13,6 +13,7 @@ class PaymentNotificationsController < ApplicationController
       :order_id => @order.id,
       :status => params[:payment_status], 
       :transaction_id => params[:txn_id])
+    logger.info "PayPal_Website_Standard: processing payment notification for invoice #{params["invoice"]}, amount is #{params["mc_gross"]} #{params["mc_currency"]}"
     
     # this logging stuff won't live here for long...
 
@@ -29,21 +30,22 @@ class PaymentNotificationsController < ApplicationController
       # which might lead to lots of false "credit owed" payment states
       # (when they should be "complete")
       payment.amount = order.read_attribute(:total)
+      logger.info "PayPal_Website_Standard: set payment.amount to #{payment.amount} based on order's total #{order.read_attribute(:total)}"
       
       payment.payment_method = Order.paypal_payment_method
       order.payments << payment
       payment.started_processing
 
       order.payment.complete
-      logger.info("order #{order.number} (#{order.id}) -- completed payment")
+      logger.info("PayPal_Website_Standard: order #{order.number} (#{order.id}) -- completed payment")
       while order.state != "complete"
          order.next
-         logger.info("advanced state of Order #{order.number} (#{order.id}). current state #{order.state}. thread #{Thread.current.to_s}. issuing callback")
+         logger.info("PayPal_Website_Standard: advanced state of Order #{order.number} (#{order.id}). current state #{order.state}. thread #{Thread.current.to_s}. issuing callback")
          state_callback(:after) # that line will run all _not run before_ callbacks
       end
       order.update_totals
       order.update!
-      logger.info("Order #{order.number} (#{order.id}) updated successfully, IPN complete")
+      logger.info("PayPal_Website_Standard: Order #{order.number} (#{order.id}) updated successfully, IPN complete")
     end
     
     render :nothing => true
