@@ -6,7 +6,7 @@
 %>
 <%= form_tag submit_url do %> 
 
-  <%- if(Spree::Paypal::Config[:encryption]) %>
+  <%- if(Order.use_encrypted_paypal_link?) %>
     <%= hidden_field_tag(:cmd, "_s-xclick") %>
     <%= hidden_field_tag(:encrypted, @order.paypal_encrypted(payment_notifications_url(:secret => Spree::Paypal::Config[:ipn_secret]))) %>
   <% else %>
