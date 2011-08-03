@@ -38,7 +38,8 @@ Order.class_eval do
       :return => Spree::Paypal::Config[:success_url],
       :notify_url => payment_notifications_url,
       :charset => "utf-8",
-      :cert_id => Spree::Paypal::Config[:cert_id]
+      :cert_id => Spree::Paypal::Config[:cert_id],
+      :page_style => Spree::Paypal::Config[:page_style]
     }  
       
     self.line_items.each_with_index do |item, index|  
