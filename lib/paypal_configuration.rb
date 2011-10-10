@@ -10,12 +10,13 @@ class PaypalConfiguration < Configuration
   
   # this stuff is really handy
   preference :currency_code, :string, :default => "EUR"
+  preference :page_style, :string, :default => 'PayPal'
   
   # encryption / security
   preference :encrypted, :boolean, :default => false
   preference :cert_id, :string, :default => "12345678"
   preference :ipn_secret, :string, :default => "secret"
-  
+
   validates_presence_of :name
   validates_uniqueness_of :name
 end
