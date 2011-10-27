@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_paypal_website_standard'
-  s.version     = '0.8.3'
+  s.version     = '0.8.4'
   s.summary     = 'Spree extension for integration with PayPal Website Standard payment'
   s.description = 'Spree extension for integration with PayPal Website Standard payment'
   s.required_ruby_version = '>= 1.8.7'
@@ -16,5 +16,5 @@ Gem::Specification.new do |s|
 
   s.has_rdoc = true
 
-  s.add_dependency('spree_core', '>= 0.50.0')
+  s.add_dependency('spree_core', '>= 0.70.0')
 end
