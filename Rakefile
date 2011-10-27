@@ -1,12 +1,10 @@
-require File.expand_path('../../config/application', __FILE__)
-
 require 'rubygems'
 require 'rake'
 require 'rake/testtask'
 require 'rake/packagetask'
 require 'rake/gempackagetask'
 
-spec = eval(File.read('pp_website_standard.gemspec'))
+spec = eval(File.read('spree_paypal_website_standard.gemspec'))
 
 Rake::GemPackageTask.new(spec) do |p|
   p.gem_spec = spec
