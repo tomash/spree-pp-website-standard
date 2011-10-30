@@ -1,3 +1,4 @@
+# encoding: UTF-8
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_paypal_website_standard'
@@ -16,5 +17,7 @@ Gem::Specification.new do |s|
 
   s.has_rdoc = true
 
-  s.add_dependency('spree_core', '>= 0.70.0')
+  s.add_dependency('spree_core', '>= 0.70.1')
+  s.add_development_dependency 'rspec-rails'
+  s.add_development_dependency 'sqlite3'
 end
