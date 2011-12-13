@@ -1,4 +1,4 @@
-<%- if(RAILS_ENV == 'development')
+<%- if Rails.env.development?
       submit_url = Spree::Paypal::Config[:sandbox_url]
     else
       submit_url = Spree::Paypal::Config[:paypal_url]
