@@ -46,6 +46,10 @@ Run the install rake task to copiy migrations (create payment_notifications tabl
 
     rake pp_website_standard:install
 
+Run migrations
+
+    rake db:migrate
+
 Configure, run, test.
 
 
