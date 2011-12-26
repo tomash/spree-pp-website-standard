@@ -1,4 +1,4 @@
-Order.class_eval do
+Spree::Order.class_eval do
   has_many :payment_notifications
   
   # SSL certificates for encrypting paypal link
@@ -19,27 +19,27 @@ Order.class_eval do
   end
 
   def self.use_encrypted_paypal_link?
-    Spree::Paypal::Config[:encryption] &&
-    Spree::Paypal::Config[:ipn_secret] &&
-    Spree::Paypal::Config[:cert_id] &&
-    File.exist?(PAYPAL_CERT_PEM) &&   
-    File.exist?(APP_CERT_PEM) &&   
-    File.exist?(APP_KEY_PEM)   
+		Spree::PaypalWebsiteStandard::Config.encrypted &&
+		Spree::PaypalWebsiteStandard::Config.ipn_secret &&
+		Spree::PaypalWebsiteStandard::Config.cert_id &&
+		File.exist?(PAYPAL_CERT_PEM) &&
+		File.exist?(APP_CERT_PEM) &&
+		File.exist?(APP_KEY_PEM)
   end
   
   def paypal_encrypted(payment_notifications_url, options = {})
     values = {
-      :business => Spree::Paypal::Config[:account],
+      :business => Spree::PaypalWebsiteStandard::Config.account,
       :invoice => self.number,
       :cmd => '_cart',
       :upload => 1,
-      :currency_code => options[:currency_code] || Spree::Paypal::Config[:currency_code],
+      :currency_code => options[:currency_code] || Spree::PaypalWebsiteStandard::Config.currency_code,
       :handling_cart => self.ship_total,
-      :return => Spree::Paypal::Config[:success_url],
+      :return => Spree::PaypalWebsiteStandard::Config.success_url,
       :notify_url => payment_notifications_url,
       :charset => "utf-8",
-      :cert_id => Spree::Paypal::Config[:cert_id],
-      :page_style => Spree::Paypal::Config[:page_style],
+      :cert_id => Spree::PaypalWebsiteStandard::Config.cert_id,
+      :page_style => Spree::PaypalWebsiteStandard::Config.page_style,
       :tax_cart => self.tax_total
     }  
       

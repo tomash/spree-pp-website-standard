@@ -1,4 +1,4 @@
-class PaypalController < CheckoutController 
+class PaypalController < Spree::CheckoutController 
   protect_from_forgery :except => [:confirm] 
   skip_before_filter :persist_gender
   

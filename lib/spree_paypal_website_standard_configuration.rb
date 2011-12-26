@@ -1,5 +1,4 @@
-class PaypalConfiguration < Configuration
-
+class Spree::PaypalWebsiteStandardConfiguration < Spree::Preferences::Configuration
   # the url parameters should not need to be changed (unless paypal changes the api or something other major change)
   preference :sandbox_url, :string, :default => "https://www.sandbox.paypal.com/cgi-bin/webscr"
   preference :paypal_url, :string, :default => "https://www.paypal.com/cgi-bin/webscr"
@@ -17,6 +16,9 @@ class PaypalConfiguration < Configuration
   preference :cert_id, :string, :default => "12345678"
   preference :ipn_secret, :string, :default => "secret"
 
-  validates_presence_of :name
-  validates_uniqueness_of :name
+	# (true/false) pre-populate fields of billing address based on spree order data
+  preference :populate_address, :boolean, :default => true
+
+  # validates_presence_of :name
+  # validates_uniqueness_of :name
 end
