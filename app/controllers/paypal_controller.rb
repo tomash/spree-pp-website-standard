@@ -1,5 +1,5 @@
-class PaypalController < Spree::CheckoutController 
-  protect_from_forgery :except => [:confirm] 
+class PaypalController < Spree::CheckoutController
+  protect_from_forgery :except => [:confirm]
   skip_before_filter :persist_gender
   
   def confirm
@@ -11,8 +11,8 @@ class PaypalController < Spree::CheckoutController
     else
       order = current_order
       while order.state != "complete"
-         order.next
-         state_callback(:after)
+        order.next
+        state_callback(:after)
       end
       #order.finalize!
       flash[:notice] = I18n.t(:order_processed_successfully)

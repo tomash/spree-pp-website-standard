@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.version     = '1.0.0.alfa1'
   s.summary     = 'Spree extension for integration with PayPal Website Standard payment'
   s.description = 'Spree extension for integration with PayPal Website Standard payment'
-  s.required_ruby_version = '>= 1.9.1'
+  s.required_ruby_version = '>= 1.9.2'
 
   s.author            = 'Gregg Pollack, Sean Schofield, Tomasz Stachewicz, Buddhi DeSilva'
   s.email             = 'buddhi@kill3rmedia.com'

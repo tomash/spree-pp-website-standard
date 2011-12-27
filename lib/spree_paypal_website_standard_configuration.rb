@@ -15,10 +15,10 @@ class Spree::PaypalWebsiteStandardConfiguration < Spree::Preferences::Configurat
   preference :encrypted, :boolean, :default => false
   preference :cert_id, :string, :default => "12345678"
   preference :ipn_secret, :string, :default => "secret"
-
-	# (true/false) pre-populate fields of billing address based on spree order data
+  
+  # (true/false) pre-populate fields of billing address based on spree order data
   preference :populate_address, :boolean, :default => true
-
-  # validates_presence_of :name
-  # validates_uniqueness_of :name
+  
+# validates_presence_of :name
+# validates_uniqueness_of :name
 end
