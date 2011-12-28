@@ -36,7 +36,7 @@ You may want to implement your own custom logic by adding 'state_machine' hooks.
 
 Add to your Spree application Gemfile.
 
-    gem "spree_paypal_website_standard", :git => "git://github.com/buddhi-desilva/spree-pp-website-standard.git"
+    gem "spree_paypal_website_standard", :git => "git://github.com/tomash/spree-pp-website-standard.git"
 
 Run the install rake task to copy migrations (create payment_notifications table)
 

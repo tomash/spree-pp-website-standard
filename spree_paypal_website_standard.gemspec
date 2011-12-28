@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 1.9.2'
 
   s.author            = 'Gregg Pollack, Sean Schofield, Tomasz Stachewicz, Buddhi DeSilva'
-  s.email             = 'buddhi@kill3rmedia.com'
-  s.homepage          = 'https://github.com/buddhi-desilva/spree-pp-website-standard'
+  s.email             = 'tomekrs@o2.pl'
+  s.homepage          = 'http://github.com/tomash/spree-pp-website-standard'
 
   s.files        = Dir['CHANGELOG', 'README.md', 'LICENSE', 'lib/**/*', 'app/**/*']
   s.require_path = 'lib'
