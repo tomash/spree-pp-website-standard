@@ -5,3 +5,4 @@ en:
   zip_code_if_you_have_one: "Zipcode (if you have one)" 
   payment_failure: "Payment Failure"
   payment_pending: "Payment Pending"
+  check_out_with_paypal: "Check out with PayPal"
