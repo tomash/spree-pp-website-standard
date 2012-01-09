@@ -3,7 +3,7 @@ module Spree
     protect_from_forgery :except => [:create]
     skip_before_filter :restriction_access
     
-    def create      
+    def create
       if(Spree::PaypalWebsiteStandard::Config.encrypted && (params[:secret] != Spree::PaypalWebsiteStandard::Config.ipn_secret))
         logger.info "PayPal_Website_Standard: attempt to send an IPN with invalid secret"
         raise Exception
@@ -39,13 +39,14 @@ module Spree
         
         order.payment.complete
         logger.info("PayPal_Website_Standard: order #{order.number} (#{order.id}) -- completed payment")
-        while order.state != "complete"
-          order.next
-          logger.info("PayPal_Website_Standard: advanced state of Order #{order.number} (#{order.id}). current state #{order.state}. thread #{Thread.current.to_s}. issuing callback")
-          state_callback(:after) # that line will run all _not run before_ callbacks
+
+        until @order.state == "complete"
+          if @order.next!
+            @order.update!
+            state_callback(:after)
+          end
         end
-        order.update_totals
-        order.update!
+
         logger.info("PayPal_Website_Standard: Order #{order.number} (#{order.id}) updated successfully, IPN complete")
       end
       
@@ -75,6 +76,7 @@ module Spree
       current_order.payments.destroy_all if request.put?
     end
     
+		#This isn't working here in payment_nofitications_controller since IPN will run on a different session
     def after_complete
       session[:order_id] = nil
     end
