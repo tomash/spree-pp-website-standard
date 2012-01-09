@@ -14,3 +14,9 @@
 -----
 
 * Rails 3 / Spree 0.30 compatibility, using new extension system (gem)
+
+1.0.x
+-----
+
+* Ported for >= Spree 1.0.0
+* Fixed mistyped configuration variables

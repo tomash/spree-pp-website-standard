@@ -1,6 +1,6 @@
-class CreatePaymentNotifications < ActiveRecord::Migration
+class CreateSpreePaymentNotifications < ActiveRecord::Migration
   def self.up
-    create_table :payment_notifications do |t|
+    create_table :spree_payment_notifications do |t|
       t.text :params
       t.string :status
       t.string :transaction_id
@@ -10,6 +10,6 @@ class CreatePaymentNotifications < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :payment_notifications
+    drop_table :spree_payment_notifications
   end
 end

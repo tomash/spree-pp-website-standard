@@ -1,13 +1,15 @@
 # encoding: UTF-8
+version = File.read(File.expand_path("../GEM_VERSION",__FILE__)).strip
+
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_paypal_website_standard'
-  s.version     = '0.8.4'
+  s.version     = version
   s.summary     = 'Spree extension for integration with PayPal Website Standard payment'
   s.description = 'Spree extension for integration with PayPal Website Standard payment'
-  s.required_ruby_version = '>= 1.8.7'
+  s.required_ruby_version = '>= 1.9.2'
 
-  s.author            = 'Gregg Pollack, Sean Schofield, Tomasz Stachewicz'
+  s.author            = 'Gregg Pollack, Sean Schofield, Tomasz Stachewicz, Buddhi DeSilva'
   s.email             = 'tomekrs@o2.pl'
   s.homepage          = 'http://github.com/tomash/spree-pp-website-standard'
 
@@ -15,8 +17,11 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  s.has_rdoc = true
+  s.add_dependency 'spree_core', '>= 1.0.0.rc1'
 
-  s.add_dependency('spree_core', '>= 0.70.1')
-  s.add_development_dependency 'rspec-rails'
+  s.add_development_dependency 'capybara', '1.0.1'
+  s.add_development_dependency 'factory_girl'
+  s.add_development_dependency 'ffaker'
+  s.add_development_dependency 'rspec-rails',  '~> 2.7'
+  s.add_development_dependency 'sqlite3'
 end

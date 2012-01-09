@@ -38,17 +38,9 @@ Add to your Spree application Gemfile.
 
     gem "spree_paypal_website_standard", :git => "git://github.com/tomash/spree-pp-website-standard.git"
 
-Run the bundle install
+Run the install rake task to copy migrations (create payment_notifications table)
 
-    bundle install
-
-Run the install rake task to copiy migrations (create payment_notifications table)
-
-    rake pp_website_standard:install
-
-Run migrations
-
-    rake db:migrate
+    rails generate spree_paypal_website_standard:install
 
 Configure, run, test.
 
