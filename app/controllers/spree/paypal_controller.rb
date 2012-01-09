@@ -4,20 +4,21 @@ module Spree
     skip_before_filter :persist_gender
     
     def confirm
-      # XXX It works!
-      #redirect_to checkout_state_path("confirm")
-      # but we want this:
       unless current_order
         redirect_to root_path
       else
         order = current_order
-        while order.state != "complete"
-          order.next
+        if (order.payment_state == "paid") or (order.payment_state == "credit_owed")
+          flash[:notice] = t(:pp_ws_payment_received)
           state_callback(:after)
+        else
+          while order.state != "complete"
+            order.next
+            state_callback(:after)
+          end
+          flash[:notice] = t(:pp_ws_order_processed_successfully)
+          flash[:commerce_tracking] = "nothing special"
         end
-        #order.finalize!
-        flash[:notice] = I18n.t(:order_processed_successfully)
-        flash[:commerce_tracking] = "nothing special"
         redirect_to order_path(current_order)
       end
     end
