@@ -2,9 +2,9 @@ Spree::Order.class_eval do
   has_many :payment_notifications
   
   # SSL certificates for encrypting paypal link
-  PAYPAL_CERT_PEM = "#{Rails.root}/certs/paypal_cert_#{Rails.env}.pem"
-  APP_CERT_PEM = "#{Rails.root}/certs/app_cert.pem"
-  APP_KEY_PEM = "#{Rails.root}/certs/app_key.pem"
+  PAYPAL_CERT_PEM = "#{Rails.root}/certs/paypal_cert_#{Rails.env}.pem" # PayPal’s public certificate (downloaded from PayPal)
+  APP_CERT_PEM = "#{Rails.root}/certs/app_cert.pem" # Public Key
+  APP_KEY_PEM = "#{Rails.root}/certs/app_key.pem" # Private Key
   def shipment_cost
     adjustment_total - credit_total
   end
