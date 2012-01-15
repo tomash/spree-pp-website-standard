@@ -2,7 +2,7 @@
 
 A [Spree](http://spreecommerce.com) extension to allow payments using PayPal Website Standard.
 
-[![Build Status](https://secure.travis-ci.org/tomash/spree-pp-website-standard.png)](http://travis-ci.org/tomash/spree-pp-website-standard)
+[![Build Status](https://secure.travis-ci.org/buddhi/spree-pp-website-standard.png)](http://travis-ci.org/buddhi/spree-pp-website-standard)
 
 ## Before you read further
 
