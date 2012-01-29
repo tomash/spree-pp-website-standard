@@ -11,7 +11,7 @@ module SpreePaypalWebsiteStandard
       end
     end
     
-    initializer "spree.paypal_website_standard.preferences", :after => "spree.active_shipping.configuration" do |app|
+    initializer "spree.paypal_website_standard.preferences", :before => :load_config_initializers do |app|
       Spree::PaypalWebsiteStandard::Config = Spree::PaypalWebsiteStandardConfiguration.new
     end
     
