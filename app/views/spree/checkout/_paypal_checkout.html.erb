@@ -25,10 +25,10 @@
       <input id="quantity_<%= index + 1 %>" name="quantity_<%= index + 1 %>" type="hidden" value="<%= item.quantity %>" />
     <% end %>
     
-    <input id="currency_code" name="currency_code" type="hidden" value="<%= Spree::PaypalWebsiteStandard::Config.currency_code %>" />
-    <input id="handling_cart" name="handling_cart" type="hidden" value="<%= @order.ship_total %>" /> 
-    <input id="tax_cart"      name="tax_cart"      type="hidden" value="<%= @order.tax_total %>" />
-    
+    <input id="currency_code"        name="currency_code"        type="hidden" value="<%= Spree::PaypalWebsiteStandard::Config.currency_code %>" />
+    <input id="handling_cart"        name="handling_cart"        type="hidden" value="<%= @order.paypal_cart_adjustments[:ship_cost] %>" />
+    <input id="discount_amount_cart" name="discount_amount_cart" type="hidden" value="<%= @order.paypal_cart_adjustments[:discount] %>" />
+    <input id="tax_cart"             name="tax_cart"             type="hidden" value="<%= @order.tax_total %>" />
     
     <input id="cmd" name="cmd" type="hidden" value="_cart" />
     <input type="hidden" name="upload" value="1" />
