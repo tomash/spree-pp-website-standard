@@ -38,13 +38,14 @@ class PaymentNotificationsController < ApplicationController
 
       order.payment.complete
       logger.info("PayPal_Website_Standard: order #{order.number} (#{order.id}) -- completed payment")
-      while order.state != "complete"
-         order.next
-         logger.info("PayPal_Website_Standard: advanced state of Order #{order.number} (#{order.id}). current state #{order.state}. thread #{Thread.current.to_s}. issuing callback")
-         state_callback(:after) # that line will run all _not run before_ callbacks
+      
+      until @order.state == "complete"
+        if @order.next!
+          @order.update!
+          state_callback(:after)
+        end
       end
-      order.update_totals
-      order.update!
+      
       logger.info("PayPal_Website_Standard: Order #{order.number} (#{order.id}) updated successfully, IPN complete")
     end
     
