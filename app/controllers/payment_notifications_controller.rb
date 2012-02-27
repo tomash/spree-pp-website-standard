@@ -1,6 +1,7 @@
 class PaymentNotificationsController < ApplicationController
   protect_from_forgery :except => [:create]
   skip_before_filter :restriction_access  
+  before_filter :encode_params, :only => :create
   
   def create
     if(Spree::Paypal::Config[:encryption] && (params[:secret] != Spree::Paypal::Config[:ipn_secret]))
@@ -81,6 +82,15 @@ class PaymentNotificationsController < ApplicationController
 
   def default_country
     Country.find Spree::Config[:default_country_id]
+  end
+
+  # Reencode all strings when PayPal encoding differs from our Ruby string encoding
+  def encode_params
+    if params[:charset] and "".force_enconding(params[:charset]).encoding != Enconding.default_internal
+      params.each_value do |value|
+        value.force_encoding(params[:charset]).encode! Encoding.default_internal
+      end
+    end
   end
 
 end
