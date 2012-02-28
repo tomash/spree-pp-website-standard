@@ -17,6 +17,9 @@ class PaypalConfiguration < Configuration
   preference :cert_id, :string, :default => "12345678"
   preference :ipn_secret, :string, :default => "secret"
 
+  # encoding
+  preference :force_encoding, :boolean, :default => false
+
   validates_presence_of :name
   validates_uniqueness_of :name
 end

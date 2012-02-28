@@ -86,6 +86,7 @@ class PaymentNotificationsController < ApplicationController
 
   # Reencode all strings when PayPal encoding differs from our Ruby string encoding
   def encode_params
+    return unless Spree::Paypal::Config[:force_internal_encoding]
     if params[:charset] and Encoding.find(params[:charset]) != Encoding.default_internal
       params.each_pair do |key, value|
         params[key] = value.force_encoding(params[:charset]).encode! Encoding.default_internal
