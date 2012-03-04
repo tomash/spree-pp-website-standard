@@ -1,0 +1,26 @@
+<h2><%= t(:ipn_notifications, :scope => 'paypal') %></h2>
+
+<table class="index">
+  <tr>
+    <th><%= t(:transaction_type, :scope => 'paypal') %></th>
+    <th><%= t(:payer_email, :scope => 'paypal') %></th>
+    <th><%= t(:deposit_amount, :scope => 'paypal') %></th>
+    <th><%= t(:mc_currency, :scope => 'paypal') %></th>
+    <th><%= t(:mc_gross, :scope => 'paypal') %></th>
+    <th><%= t(:mc_fee, :scope => 'paypal') %></th>
+    <th><%= t(:payment_gross, :scope => 'paypal') %></th>
+    <th><%= t(:payment_fee, :scope => 'paypal') %></th>
+  </tr>
+  <% payment.order.payment_notifications.each do |notification| -%>
+  <tr>
+    <td><%= notification.params["txn_type"] or notification.params["reason_code"] %></td>
+    <td><%= notification.params["payer_email"] %></td>
+    <td><%= number_to_currency notification.params["payment_gross"].to_f - notification.params["payment_fee"].to_f, :unit => "$" %></td>
+    <td><%= notification.params["mc_currency"] %></td>
+    <td><%= notification.params["mc_gross"] %></td>
+    <td><%= notification.params["mc_fee"] %></td>
+    <td><%= number_to_currency notification.params["payment_gross"].to_f, :unit => "$" %></td>
+    <td><%= number_to_currency notification.params["payment_fee"].to_f, :unit => "$" %></td>
+  </tr>
+  <% end -%>
+</table>
