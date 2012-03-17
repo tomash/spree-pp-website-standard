@@ -7,7 +7,7 @@ module SpreePaypalWebsiteStandard
     
     initializer "spree.active_shipping.configuration", :after => "spree.environment" do |app|
       Dir.glob(File.join(File.dirname(__FILE__), "../../lib/spree_paypal_website_standard_configuration.rb")) do |c|
-      Rails.configuration.cache_classes ? require(c) : load(c)
+        Rails.configuration.cache_classes ? require(c) : load(c)
       end
     end
     
@@ -35,17 +35,17 @@ module SpreePaypalWebsiteStandard
         Rails.configuration.cache_classes ? require(c) : load(c)
       end
     
-    # add new events and states to the FSM
+      # add new events and states to the FSM
 =begin
-    fsm = Order.state_machines[:state]
-    fsm.events << StateMachine::Event.new(fsm, "fail_payment")
-    fsm.events["fail_payment"].transition(:to => 'payment_failure', :from => ['in_progress', 'payment_pending'])
-  
-    fsm.events << StateMachine::Event.new(fsm, "pend_payment")
-    fsm.events["pend_payment"].transition(:to => 'payment_pending', :from => 'in_progress')
-    fsm.after_transition(:to => 'payment_pending', :do => lambda {|order| order.update_attribute(:checkout_complete, true)})
-  
-    fsm.events["pay"].transition(:to => 'paid', :from => ['payment_pending', 'in_progress'])
+      fsm = Order.state_machines[:state]
+      fsm.events << StateMachine::Event.new(fsm, "fail_payment")
+      fsm.events["fail_payment"].transition(:to => 'payment_failure', :from => ['in_progress', 'payment_pending'])
+    
+      fsm.events << StateMachine::Event.new(fsm, "pend_payment")
+      fsm.events["pend_payment"].transition(:to => 'payment_pending', :from => 'in_progress')
+      fsm.after_transition(:to => 'payment_pending', :do => lambda {|order| order.update_attribute(:checkout_complete, true)})
+    
+      fsm.events["pay"].transition(:to => 'paid', :from => ['payment_pending', 'in_progress'])
 =end
     end
     

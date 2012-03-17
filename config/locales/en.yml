@@ -15,3 +15,4 @@ en:
     mc_fee: Transaction Fee
     payment_gross: Payment Gross (USD)
     payment_fee: Payment Fee (USD)
+    foreign_ipn_message: "Ignoring IPN with invoice # %{invoice_num} as it didn't originate from a Spree order"
