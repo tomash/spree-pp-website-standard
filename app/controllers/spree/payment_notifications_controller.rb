@@ -2,6 +2,7 @@ module Spree
   class PaymentNotificationsController < BaseController
     protect_from_forgery :except => [:create]
     skip_before_filter :restriction_access
+    before_filter :ignore_foreign_notifications
     
     def create
       if(Spree::PaypalWebsiteStandard::Config.encrypted && (params[:secret] != Spree::PaypalWebsiteStandard::Config.ipn_secret))
@@ -84,6 +85,12 @@ module Spree
     def default_country
       Country.find Spree::PaypalWebsiteStandard::Config.default_country_id
     end
-    
+
+    def ignore_foreign_notifications
+      if params[:invoice_id].present?
+        logger.info(I18n.t(:foreign_ipn_message, :scope => "paypal"))
+        render :nothing => true
+      end
+    end
   end
 end

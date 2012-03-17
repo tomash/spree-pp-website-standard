@@ -1,6 +1,6 @@
 Spree::Order.class_eval do
   has_many :payment_notifications
-  
+
   # SSL certificates for encrypting paypal link
   PAYPAL_CERT_PEM = "#{Rails.root}/certs/paypal_cert_#{Rails.env}.pem"
   APP_CERT_PEM = "#{Rails.root}/certs/app_cert.pem"
@@ -8,15 +8,15 @@ Spree::Order.class_eval do
   def shipment_cost
     adjustment_total - credit_total
   end
-  
+
   def payable_via_paypal?
     !!self.class.paypal_payment_method
   end
-  
+
   def self.paypal_payment_method
-    PaymentMethod.select{ |pm| pm.name.downcase =~ /paypal/}.first
+    Spree::PaymentMethod.select{ |pm| pm.name.downcase =~ /paypal/}.first
   end
-  
+
   def self.use_encrypted_paypal_link?
     Spree::PaypalWebsiteStandard::Config.encrypted &&
     Spree::PaypalWebsiteStandard::Config.ipn_secret &&
@@ -25,7 +25,7 @@ Spree::Order.class_eval do
     File.exist?(APP_CERT_PEM) &&
     File.exist?(APP_KEY_PEM)
   end
-  
+
   def paypal_encrypted(payment_notifications_url, options = {})
     values = {
       :business => Spree::PaypalWebsiteStandard::Config.account,
@@ -41,7 +41,7 @@ Spree::Order.class_eval do
       :page_style => Spree::PaypalWebsiteStandard::Config.page_style,
       :tax_cart => self.tax_total
     }
-    
+
     self.line_items.each_with_index do |item, index|
       values.merge!({
         "amount_#{index + 1}" => item.price,
@@ -50,10 +50,10 @@ Spree::Order.class_eval do
         "quantity_#{index + 1}" => item.quantity
       })
     end
-    
+
     encrypt_for_paypal(values)
   end
-  
+
   def encrypt_for_paypal(values)
     paypal_cert = File.read(PAYPAL_CERT_PEM)
     app_cert = File.read(APP_CERT_PEM)
