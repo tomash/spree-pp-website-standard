@@ -3,7 +3,7 @@ require "spec_helper"
 module Spree
   describe PaymentNotificationsController do
     context "when the IPN has an invoice number that is not from a Spree order" do
-      let(:ipn) { { :invoice => "INV2-AAAA-BBBB-CCCC-DDDD" } }
+      let(:ipn) { { :invoice_id => "INV2-AAAA-BBBB-CCCC-DDDD" } }
 
       it "doesn't create a PaymentNotification" do
         expect {

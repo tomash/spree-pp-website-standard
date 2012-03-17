@@ -87,7 +87,7 @@ module Spree
     end
 
     def ignore_foreign_notifications
-      unless params[:invoice].index /R[0-9]{9}/
+      if params[:invoice_id].present?
         logger.info(I18n.t(:foreign_ipn_message, :scope => "paypal"))
         render :nothing => true
       end
