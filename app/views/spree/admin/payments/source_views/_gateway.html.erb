@@ -2,14 +2,16 @@
 
 <table class="index">
   <tr>
-    <th><%= t(:transaction_type, :scope => 'paypal') %></th>
-    <th><%= t(:payer_email, :scope => 'paypal') %></th>
-    <th><%= t(:deposit_amount, :scope => 'paypal') %></th>
-    <th><%= t(:mc_currency, :scope => 'paypal') %></th>
-    <th><%= t(:mc_gross, :scope => 'paypal') %></th>
-    <th><%= t(:mc_fee, :scope => 'paypal') %></th>
-    <th><%= t(:payment_gross, :scope => 'paypal') %></th>
-    <th><%= t(:payment_fee, :scope => 'paypal') %></th>
+    <%- with_options :scope => 'paypal' do |i18n| %>
+    <th><%= i18n.t(:transaction_type) %></th>
+    <th><%= i18n.t(:payer_email) %></th>
+    <th><%= i18n.t(:deposit_amount) %></th>
+    <th><%= i18n.t(:mc_currency) %></th>
+    <th><%= i18n.t(:mc_gross) %></th>
+    <th><%= i18n.t(:mc_fee) %></th>
+    <th><%= i18n.t(:payment_gross) %></th>
+    <th><%= i18n.t(:payment_fee) %></th>
+    <%- end %>
   </tr>
   <% payment.order.payment_notifications.each do |notification| -%>
   <tr>
