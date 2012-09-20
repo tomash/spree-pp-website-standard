@@ -8,3 +8,6 @@ tmp
 nbproject
 *.swp
 spec/dummy
+*.sublime-workspace
+*.sublime-project
+
