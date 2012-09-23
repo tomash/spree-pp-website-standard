@@ -1,0 +1,87 @@
+<%= render :partial => 'spree/admin/shared/configuration_menu' %>
+
+<h1><%= t(:paypal_preferences) %></h1>
+
+<style type="text/css">
+table.pp_wss_form input {
+  margin-bottom: 1.5em;
+}
+
+table.pp_wss_form input[type="text"] {
+  display:block;
+  clear: both;
+  padding: 0.2em;
+  width: 100%;
+  font-size: 1.1em;
+}
+</style>
+
+<%= form_tag admin_paypal_preferences_path, :method => :update do %>
+  <table class="pp_wss_form">
+    <tr>
+      <td>
+        <%= label_tag 'sandbox_url', t(:pp_label_sandbox_url) %>
+        <%= text_field_tag 'sandbox_url', @pp_config.sandbox_url %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <%= label_tag 'paypal_url', t(:pp_label_url) %>
+        <%= text_field_tag 'paypal_url', @pp_config.paypal_url %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <%= label_tag 'success_url', t(:pp_label_success_url) %>
+        <%= text_field_tag 'success_url', @pp_config.success_url %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <%= label_tag 'account', t(:pp_label_account) %>
+        <%= text_field_tag 'account', @pp_config.account %>
+      </td>
+    </tr>
+        
+    <tr>
+      <td>
+        <%= label_tag 'currency_code', t(:pp_label_currency_code) %>
+        <%= text_field_tag 'currency_code', @pp_config.currency_code %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <%= check_box_tag 'encrypted', '1', @pp_config.encrypted %>
+        <%= label_tag 'encrypted', t(:pp_label_encrypted) %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <%= label_tag 'cert_id', t(:pp_label_cert_id) %>
+        <%= text_field_tag 'cert_id', @pp_config.cert_id %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <%= label_tag 'ipn_secret', t(:pp_label_ipn_secret) %>
+        <%= text_field_tag 'ipn_secret', @pp_config.ipn_secret %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p class="form-buttons" data-hook="buttons">
+          <%= button t(:save_preferences) %>
+        </p>
+      </td>
+    </tr>
+
+
+  </table>
+<% end %>
