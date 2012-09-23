@@ -47,25 +47,17 @@ Configure, run, test.
 
 ## Configuration
 
-Be sure to configure the following configuration parameters. Preferably put it in initializer like config/initializers/pp_website_standard.rb.
+Navigate to Spree > Admin > Configurations and Click on 'PayPal Preferences' and you can set the following preferences
 
-Example:
-
-    Spree::Paypal::Config.set(:account => "foo@example.com") 
-    Spree::Paypal::Config.set(:success_url => "http://localhost:3000/paypal/confirm")
-    
-
-The following configuration options (keys) can be set:
-
-    :account         # email account of store 
-    :success_url     # url the customer is redirected to after successfully completing payment
-    :currency_code   # default EUR
-    :sandbox_url     # paypal url in sandbox mode, default https://www.sandbox.paypal.com/cgi-bin/webscr
-    :paypal_url      # paypal url in production, default https://www.paypal.com/cgi-bin/webscr
-    :populate_address # (true/false) pre-populate fields of billing address based on spree order data
-    :encryption      # (true/false) use encrypted shopping cart
-    :cert_id         # id of certificate used to encrypted stuff
-    :ipn_secret      # secret string for authorizing IPN
+    account         # email account of store
+    success_url     # url the customer is redirected to after successfully completing payment
+    currency_code   # default EUR
+    sandbox_url     # paypal url in sandbox mode, default https://www.sandbox.paypal.com/cgi-bin/webscr
+    paypal_url      # paypal url in production, default https://www.paypal.com/cgi-bin/webscr
+    populate_address # (true/false) pre-populate fields of billing address based on spree order data
+    encryption      # (true/false) use encrypted shopping cart
+    cert_id         # id of certificate used to encrypted stuff
+    ipn_secret      # secret string for authorizing IPN
 
 Only the first three ones need to be set up in order to get running. 
 
