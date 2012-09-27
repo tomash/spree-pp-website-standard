@@ -1,5 +1,7 @@
 module Spree
   class PaymentNotification < ActiveRecord::Base
+    attr_accessible :params, :order_id, :status, :transaction_id
+
     belongs_to :order
     serialize :params
     after_create :mark_order_as_paid

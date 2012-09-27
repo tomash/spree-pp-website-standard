@@ -64,8 +64,8 @@ module Spree
     end
     
     def before_address
-      @order.bill_address ||= Address.new(:country => default_country)
-      @order.ship_address ||= Address.new(:country => default_country)
+        @order.bill_address ||= Address.default
+        @order.ship_address ||= Address.default
     end
     
     def before_delivery
@@ -75,15 +75,6 @@ module Spree
     def before_payment
       current_order.payments.destroy_all if request.put?
     end
-    
-		#This isn't working here in payment_nofitications_controller since IPN will run on a different session
-    def after_complete
-      session[:order_id] = nil
-    end
-    
-    def default_country
-      Country.find Spree::PaypalWebsiteStandard::Config.default_country_id
-    end
-    
+            
   end
 end
