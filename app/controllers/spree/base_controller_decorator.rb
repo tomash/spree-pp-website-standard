@@ -1,16 +1,39 @@
 Spree::BaseController.class_eval do
 	before_filter :check_current_order
 
-	# In case the order has been paid and user did not return to the
-	# website with standard paypal return link. The the current order
-	# will be checked for received payments and cart will be reset.
+	# Checks if an order exists and if its paid
+	# will display the payment success message
 	def check_current_order
-		if current_order && current_order.line_items.present? \
-		&& current_order.state == "complete" \
-		&& ((current_order.payment_state == "paid") or (current_order.payment_state == "credit_owed"))
+	
+		# Temporary measure to fix the authorisation issue
+		# when a user logs out after adding items to cart
+		# and logs in again and when tries to access the cart
+		# it gives an authorisation failure error.
+		if current_order
+			@order = current_order(true)
+			associate_user
+		end
+
+		# TODO: Introduce a proper way to check the order payment status
+		# Currently the order get removed from the session the moment the
+		# spree receives payment and no way of tracking. Might have to introduce
+		# other means of checking for payment receival for orders. A possible
+		# method would be to have session id sent along with IPN secret and
+		# mark a flag on payment notifications after displaying payment received
+		# message
+		if current_order \
+		&& current_order.completed? 
+		# && ((current_order.payment_state == "paid") or (current_order.payment_state == "credit_owed"))
 			flash[:notice] = t(:pp_ws_payment_received)
+			@order = current_order
 			session[:order_id] = nil
-			redirect_to root_path
+
+			if current_user
+				redirect_to spree.order_path(@order)
+			else
+				redirect_to root_path
+			end
+			
 		end
 	end
 
