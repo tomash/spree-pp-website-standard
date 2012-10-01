@@ -35,7 +35,7 @@
       <input type="hidden" name="upload" value="1" />
       <input id="notify_url" name="notify_url" type="hidden" value="<%= payment_notifications_url %>" />
       <input type="hidden" name="rm" value ="2" />
-      <input id="return" name="return" type="hidden" value="<%= Spree::PaypalWebsiteStandard::Config.success_url %>" />
+      <input id="return" name="return" type="hidden" value="<%= Spree::PaypalWebsiteStandard::Config.success_url + '?order=' + @order.number %>" />
       
       <input id="charset" name="charset" type="hidden" value="utf-8" />
       

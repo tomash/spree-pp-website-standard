@@ -35,7 +35,7 @@ table.pp_wss_form input[type="text"] {
     <tr>
       <td>
         <%= label_tag 'success_url', t(:pp_label_success_url) %>
-        <%= text_field_tag 'success_url', @pp_config.success_url %>
+        <%= text_field_tag 'success_url', @pp_config.success_url, :disabled => true %>
       </td>
     </tr>
 

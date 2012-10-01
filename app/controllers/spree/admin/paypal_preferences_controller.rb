@@ -12,6 +12,10 @@ module Spree
           Spree::PaypalWebsiteStandard::Config[name] = value
         end
 
+        # Setting the success URL within the controller to prevent error.
+        # If the confirm url get change it has to be reflected here.
+        Spree::PaypalWebsiteStandard::Config[:success_url] = Spree::Config.site_url + "/paypal/confirm"
+
         unless params.has_key?('encrypted')
           Spree::PaypalWebsiteStandard::Config.encrypted = false
         end
