@@ -5,7 +5,8 @@ class Spree::PaypalWebsiteStandardConfiguration < Spree::Preferences::Configurat
   
   # these are just default preferences of course, you'll need to change them to something meaningful
   preference :account, :string, :default => "foo@example.com"
-  preference :success_url, :string, :default => "http://localhost:3000/paypal/confirm"
+  
+  preference :success_url, :string, :default => Spree::Config.site_url + "/paypal/confirm"
   
   # this stuff is really handy
   preference :currency_code, :string, :default => "EUR"

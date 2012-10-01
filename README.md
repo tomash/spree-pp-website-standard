@@ -2,7 +2,7 @@
 
 A [Spree](http://spreecommerce.com) extension to allow payments using PayPal Website Standard.
 
-[![Build Status](https://secure.travis-ci.org/tomash/spree-pp-website-standard.png)](http://travis-ci.org/tomash/spree-pp-website-standard)
+[![Build Status](https://secure.travis-ci.org/buddhi-desilva/spree-pp-website-standard.png)](http://travis-ci.org/buddhi-desilva/spree-pp-website-standard)
 
 ## Before you read further
 
@@ -47,25 +47,17 @@ Configure, run, test.
 
 ## Configuration
 
-Be sure to configure the following configuration parameters. Preferably put it in initializer like config/initializers/pp_website_standard.rb.
+Navigate to Spree > Admin > Configurations and Click on 'PayPal Preferences' and you can set the following preferences
 
-Example:
-
-    Spree::Paypal::Config.set(:account => "foo@example.com") 
-    Spree::Paypal::Config.set(:success_url => "http://localhost:3000/paypal/confirm")
-    
-
-The following configuration options (keys) can be set:
-
-    :account         # email account of store 
-    :success_url     # url the customer is redirected to after successfully completing payment
-    :currency_code   # default EUR
-    :sandbox_url     # paypal url in sandbox mode, default https://www.sandbox.paypal.com/cgi-bin/webscr
-    :paypal_url      # paypal url in production, default https://www.paypal.com/cgi-bin/webscr
-    :populate_address # (true/false) pre-populate fields of billing address based on spree order data
-    :encryption      # (true/false) use encrypted shopping cart
-    :cert_id         # id of certificate used to encrypted stuff
-    :ipn_secret      # secret string for authorizing IPN
+    account         # email account of store
+    success_url     # url the customer is redirected to after successfully completing payment
+    currency_code   # default EUR
+    sandbox_url     # paypal url in sandbox mode, default https://www.sandbox.paypal.com/cgi-bin/webscr
+    paypal_url      # paypal url in production, default https://www.paypal.com/cgi-bin/webscr
+    populate_address # (true/false) pre-populate fields of billing address based on spree order data
+    encryption      # (true/false) use encrypted shopping cart
+    cert_id         # id of certificate used to encrypted stuff
+    ipn_secret      # secret string for authorizing IPN
 
 Only the first three ones need to be set up in order to get running. 
 
@@ -75,6 +67,8 @@ The last three are required for secure, encrypted operation (see below).
 
 The payment link can be encrypted using an SSL key pair and a PayPal public key. In order to attempt this encryption, the following elements must be available. If these are not available a normal link will be generated.
 
+And we shouldn't confuse this encryption with SSL provided by the website to eliminate somebody hijacking users' sessions. This encrypts the data sent to PayPal and eliminate an outsider or especially a buyer crafting a PayPal response to mark the order as paid.
+
 Spree::Paypal::Config[:encrypted] must be set to true.
 Spree::Paypal::Config[:cert_id] must be set to a valid certificate id.
 Spree::Paypal::Config[:ipn_secret] must be set to a string considered secret.
@@ -82,7 +76,11 @@ Application must have a Rails.root/certs directory with following files:
 
     app_cert.pem # application certificate
     app_key.pem  # application key
-    paypal_cert_#{Rails.env}.pem # paypal certificate
+    paypal_cert_#{Rails.env}.pem # paypal public certificate (downloded from PayPal)
+
+Download the two PayPal public certificates for development and production environments and rename paypal_cert_development.pem and paypal_cert_production.pem respectively. Gem will pick the correct certificate based on the environment.
+
+Also get the certificate ID from PayPal (copy the listed ID next to the uploaded public/application key) and set the cert_id configuration variable.
 
 The best instructions on what is what, how these files should be generated etc. are [in AsciiCast 143](http://asciicasts.com/episodes/143-paypal-security) (basically the code of this extension is also based on this AsciiCast). 
 

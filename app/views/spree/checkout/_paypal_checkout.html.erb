@@ -4,53 +4,55 @@
       submit_url = Spree::PaypalWebsiteStandard::Config.paypal_url
     end
 %>
-<%= form_tag submit_url do %> 
+  <div id="paypal-checkout">
+  <%= form_tag submit_url do %> 
 
-  <%- if(Spree::Order.use_encrypted_paypal_link?) %>
-    <%= hidden_field_tag(:cmd, "_s-xclick") %>
-    <%= hidden_field_tag(:encrypted, @order.paypal_encrypted(payment_notifications_url(:secret => Spree::PaypalWebsiteStandard::Config.ipn_secret))) %>
-  <% else %>
-  
-    <input id="page_style" name="page_style" type="hidden" value="<%= Spree::PaypalWebsiteStandard::Config.page_style %>"/>
-    <input id="business" name="business" type="hidden" value="<%= Spree::PaypalWebsiteStandard::Config.account %>" />
-    <input id="invoice" name="invoice" type="hidden" value="<%= @order.number %>" />
+    <%- if(Spree::Order.use_encrypted_paypal_link?) %>
+      <%= hidden_field_tag(:cmd, "_s-xclick") %>
+      <%= hidden_field_tag(:encrypted, @order.paypal_encrypted(payment_notifications_url(:secret => Spree::PaypalWebsiteStandard::Config.ipn_secret))) %>
+    <% else %>
     
-    <% @order.line_items.each_with_index do |item, index| %>
-      <%- if item.variant.respond_to?(:paypal_name) %>
-        <input id="item_name_<%= index + 1 %>" name="item_name_<%= index + 1 %>" type="hidden" value="<%=  item.variant.paypal_name  %>"  />
-      <% else %>
-        <input id="item_name_<%= index + 1 %>" name="item_name_<%= index + 1 %>" type="hidden" value="<%= item.variant.product.name %>" />
+      <input id="page_style" name="page_style" type="hidden" value="<%= Spree::PaypalWebsiteStandard::Config.page_style %>"/>
+      <input id="business" name="business" type="hidden" value="<%= Spree::PaypalWebsiteStandard::Config.account %>" />
+      <input id="invoice" name="invoice" type="hidden" value="<%= @order.number %>" />
+      
+      <% @order.line_items.each_with_index do |item, index| %>
+        <%- if item.variant.respond_to?(:paypal_name) %>
+          <input id="item_name_<%= index + 1 %>" name="item_name_<%= index + 1 %>" type="hidden" value="<%=  item.variant.paypal_name  %>"  />
+        <% else %>
+          <input id="item_name_<%= index + 1 %>" name="item_name_<%= index + 1 %>" type="hidden" value="<%= item.variant.product.name %>" />
+        <% end %>
+        <input id="amount_<%= index + 1 %>" name="amount_<%= index + 1 %>" type="hidden" value="<%= item.price %>" />
+        <input id="quantity_<%= index + 1 %>" name="quantity_<%= index + 1 %>" type="hidden" value="<%= item.quantity %>" />
       <% end %>
-      <input id="amount_<%= index + 1 %>" name="amount_<%= index + 1 %>" type="hidden" value="<%= item.price %>" />
-      <input id="quantity_<%= index + 1 %>" name="quantity_<%= index + 1 %>" type="hidden" value="<%= item.quantity %>" />
+      
+      <input id="currency_code"        name="currency_code"        type="hidden" value="<%= Spree::PaypalWebsiteStandard::Config.currency_code %>" />
+      <input id="handling_cart"        name="handling_cart"        type="hidden" value="<%= @order.paypal_cart_adjustments[:ship_cost] %>" />
+      <input id="discount_amount_cart" name="discount_amount_cart" type="hidden" value="<%= @order.paypal_cart_adjustments[:discount] %>" />
+      <input id="tax_cart"             name="tax_cart"             type="hidden" value="<%= @order.tax_total %>" />
+      
+      <input id="cmd" name="cmd" type="hidden" value="_cart" />
+      <input type="hidden" name="upload" value="1" />
+      <input id="notify_url" name="notify_url" type="hidden" value="<%= payment_notifications_url %>" />
+      <input type="hidden" name="rm" value ="2" />
+      <input id="return" name="return" type="hidden" value="<%= Spree::PaypalWebsiteStandard::Config.success_url + '?order=' + @order.number %>" />
+      
+      <input id="charset" name="charset" type="hidden" value="utf-8" />
+      
+      <% if(Spree::PaypalWebsiteStandard::Config.populate_address && @order.bill_address) %>
+        <input type="hidden"  name="address1"    id="address1" value="<%= @order.bill_address.address1 %>" />
+        <input type="hidden"  name="address2"    id="address2" value="<%= @order.bill_address.address2 %>" />
+        <input type="hidden"  name="city"        id="city"     value="<%= @order.bill_address.city %>"     />
+        <input type="hidden"  name="country"     id="country"  value="<%= @order.bill_address.country.iso %>" />
+        <input type="hidden"  name="email"       id="email"    value="<%= @order.email %>"                 />
+        <input type="hidden"  name="first_name"  id="first_name" value="<%= @order.bill_address.firstname %>" />
+        <input type="hidden"  name="last_name"   id="last_name"  value="<%= @order.bill_address.lastname %>"  />
+        <input type="hidden"  name="zip"         id="zip"      value="<%= @order.bill_address.zipcode %>"     />
+        <input type="hidden"  name="night_phone_b"         id="night_phone_b"      value="<%= @order.bill_address.phone %>"     />
+      <% end %>
     <% end %>
     
-    <input id="currency_code" name="currency_code" type="hidden" value="<%= Spree::PaypalWebsiteStandard::Config.currency_code %>" />
-    <input id="handling_cart" name="handling_cart" type="hidden" value="<%= @order.ship_total %>" /> 
-    <input id="tax_cart"      name="tax_cart"      type="hidden" value="<%= @order.tax_total %>" />
-    
-    
-    <input id="cmd" name="cmd" type="hidden" value="_cart" />
-    <input type="hidden" name="upload" value="1" />
-    <input id="notify_url" name="notify_url" type="hidden" value="<%= payment_notifications_url %>" />
-    <input type="hidden" name="rm" value ="2" />
-    <input id="return" name="return" type="hidden" value="<%= Spree::PaypalWebsiteStandard::Config.success_url %>" />
-    
-    <input id="charset" name="charset" type="hidden" value="utf-8" />
-    
-    <% if(Spree::PaypalWebsiteStandard::Config.populate_address && @order.bill_address) %>
-      <input type="hidden"  name="address1"    id="address1" value="<%= @order.bill_address.address1 %>" />
-      <input type="hidden"  name="address2"    id="address2" value="<%= @order.bill_address.address2 %>" />
-      <input type="hidden"  name="city"        id="city"     value="<%= @order.bill_address.city %>"     />
-      <input type="hidden"  name="country"     id="country"  value="<%= @order.bill_address.country.iso %>" />
-      <input type="hidden"  name="email"       id="email"    value="<%= @order.email %>"                 />
-      <input type="hidden"  name="first_name"  id="first_name" value="<%= @order.bill_address.firstname %>" />
-      <input type="hidden"  name="last_name"   id="last_name"  value="<%= @order.bill_address.lastname %>"  />
-      <input type="hidden"  name="zip"         id="zip"      value="<%= @order.bill_address.zipcode %>"     />
-      <input type="hidden"  name="night_phone_b"         id="night_phone_b"      value="<%= @order.bill_address.phone %>"     />
-    <% end %>
-  <% end %>
-  
-  <%= image_submit_tag "pp_checkout.gif", :alt => t(:check_out_with_paypal) %>
+    <%= image_submit_tag "pp_checkout.png", :alt => t(:check_out_with_paypal) %>
 
-<% end -%>
+  <% end -%>
+</div>

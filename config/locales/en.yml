@@ -6,5 +6,15 @@ en:
   payment_failure: "Payment Failure"
   payment_pending: "Payment Pending"
   check_out_with_paypal: "Check out with PayPal"
-  pp_ws_payment_received: "Thank you.. We received the payment for your order from PayPal. Your order will be shipped shortly"
-  pp_ws_order_processed_successfully: "Thank you.. Your order processed succesfully. You will be notified once we receive the payment from PayPal"
+  pp_ws_payment_received: "Thank you.. We have received the payment for your order from PayPal."
+  pp_ws_order_processing: "Thank you.. Your order processed succesfully. You will be notified once we receive the payment from PayPal"
+  paypal_preferences: PayPal Preferences
+  set_paypal_preferences_here: Set PayPal preferences here
+  pp_label_sandbox_url: PayPal Sandbox URL
+  pp_label_url: PayPal URL
+  pp_label_success_url: Success URL (The correct Site URL to be set within Spree > General Settings)
+  pp_label_account: PayPal Account (email address)
+  pp_label_currency_code: Currency Code
+  pp_label_encrypted: Use encrypted form
+  pp_label_cert_id: PayPal Certificate ID
+  pp_label_ipn_secret: IPN Secret

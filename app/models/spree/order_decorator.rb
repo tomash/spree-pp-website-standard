@@ -2,11 +2,34 @@ Spree::Order.class_eval do
   has_many :payment_notifications
   
   # SSL certificates for encrypting paypal link
-  PAYPAL_CERT_PEM = "#{Rails.root}/certs/paypal_cert_#{Rails.env}.pem"
-  APP_CERT_PEM = "#{Rails.root}/certs/app_cert.pem"
-  APP_KEY_PEM = "#{Rails.root}/certs/app_key.pem"
-  def shipment_cost
-    adjustment_total - credit_total
+  PAYPAL_CERT_PEM = "#{Rails.root}/certs/paypal_cert_#{Rails.env}.pem" # PayPal’s public certificate (downloaded from PayPal)
+  APP_CERT_PEM = "#{Rails.root}/certs/app_cert.pem" # Public Key
+  APP_KEY_PEM = "#{Rails.root}/certs/app_key.pem" # Private Key
+
+  # This is a workaround for PayPal's disocunt limitations. Discount cannot be bigger than item total.  
+  # E.g: Before calculation 
+  # Promo credits : 20
+  # Total item cost: 19
+  # Shipping: 5
+  # --------------------------
+  # Becomes:
+  # Discount :18.99 (PayPal sees it as a discount) 
+  # Total item cost: 19 (cannot be changed, PayPal does the calculation)
+  # Shipping : 4.01
+  def paypal_cart_adjustments
+    pp_adjustments = {}
+    # The discount has to be a positive number and shipping is calcuated separately in paypal.
+    pp_adjustments[:discount] = (self.adjustment_total - self.ship_total).abs
+    
+    # for PayPal discount has to be < total item cost
+    # deducting the remaining credit from the shipping cost
+    if pp_adjustments[:discount] > self.item_total
+      pp_adjustments[:ship_cost] = (pp_adjustments[:discount] - (self.item_total + self.ship_total - BigDecimal("0.01"))).abs
+      pp_adjustments[:discount] = self.item_total - BigDecimal("0.01")
+    else
+      pp_adjustments[:ship_cost] = self.ship_total
+    end
+    pp_adjustments
   end
   
   def payable_via_paypal?
@@ -14,7 +37,7 @@ Spree::Order.class_eval do
   end
   
   def self.paypal_payment_method
-    PaymentMethod.select{ |pm| pm.name.downcase =~ /paypal/}.first
+    Spree::PaymentMethod.select{ |pm| pm.name.downcase =~ /paypal/}.first
   end
   
   def self.use_encrypted_paypal_link?
@@ -33,7 +56,8 @@ Spree::Order.class_eval do
       :cmd => '_cart',
       :upload => 1,
       :currency_code => options[:currency_code] || Spree::PaypalWebsiteStandard::Config.currency_code,
-      :handling_cart => self.ship_total,
+      :handling_cart => self.paypal_cart_adjustments[:ship_cost],
+      :discount_amount_cart => self.paypal_cart_adjustments[:discount],
       :return => Spree::PaypalWebsiteStandard::Config.success_url,
       :notify_url => payment_notifications_url,
       :charset => "utf-8",
