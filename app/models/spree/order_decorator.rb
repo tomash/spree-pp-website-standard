@@ -17,28 +17,31 @@ Spree::Order.class_eval do
     PaymentMethod.select{ |pm| pm.name.downcase =~ /paypal/}.first
   end
   
-  def self.use_encrypted_paypal_link?
-    Spree::PaypalWebsiteStandard::Config.encrypted &&
-    Spree::PaypalWebsiteStandard::Config.ipn_secret &&
-    Spree::PaypalWebsiteStandard::Config.cert_id &&
-    File.exist?(PAYPAL_CERT_PEM) &&
-    File.exist?(APP_CERT_PEM) &&
-    File.exist?(APP_KEY_PEM)
-  end
+  # commented-out, will be removed
+  # decide on configuration/preference side whether you want encrypted payments
+  #def self.use_encrypted_paypal_link?
+    #Spree::PaypalWebsiteStandard::Config.encrypted &&
+    #Spree::PaypalWebsiteStandard::Config.ipn_secret &&
+    #Spree::PaypalWebsiteStandard::Config.cert_id &&
+    #File.exist?(PAYPAL_CERT_PEM) &&
+    #File.exist?(APP_CERT_PEM) &&
+    #File.exist?(APP_KEY_PEM)
+  #end
   
-  def paypal_encrypted(payment_notifications_url, options = {})
+  #def paypal_encrypted(payment_notifications_url, options = {})
+  def paypal_encrypted(paypal_configuration, payment_notifications_url, options = {})
     values = {
-      :business => Spree::PaypalWebsiteStandard::Config.account,
+      :business => paypal_configuration.preferred_account_email,
       :invoice => self.number,
       :cmd => '_cart',
       :upload => 1,
-      :currency_code => options[:currency_code] || Spree::PaypalWebsiteStandard::Config.currency_code,
+      :currency_code => options[:currency_code] || paypal_configuration.preferred_currency,
       :handling_cart => self.ship_total,
-      :return => Spree::PaypalWebsiteStandard::Config.success_url,
+      :return => paypal_configuration.preferred_success_url,
       :notify_url => payment_notifications_url,
       :charset => "utf-8",
-      :cert_id => Spree::PaypalWebsiteStandard::Config.cert_id,
-      :page_style => Spree::PaypalWebsiteStandard::Config.page_style,
+      :cert_id => paypal_configuration.preferred_certificate_id,
+      :page_style => 'PayPal',
       :tax_cart => self.tax_total
     }
     

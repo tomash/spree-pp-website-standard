@@ -1,0 +1,7 @@
+pl:
+  spree:
+    paypal_website_standard: 
+      pay_with_paypal: "Zapłać Paypalem"
+      check_out_with_paypal: "Zapłać Paypalem"
+      payment_received: "Dziękujemy, płatność została zaksięgowana."
+      order_processed_successfully: "Dziękujemy, płatność została zaksięgowana."
