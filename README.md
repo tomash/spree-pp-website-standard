@@ -91,6 +91,15 @@ The best instructions on what is what, how these files should be generated etc. 
 Real world testing indicates that IPN can be very slow.  If you want to test the IPN piece Paypal now has an IPN tool on their developer site.  Just use the correct URL from the hidden field on your Spree checkout screen.  In the IPN tool, change the transaction type to `cart checkout` and change the `mc_gross` variable to match your order total.
 
 
+## Testing
+
+Be sure to bundle your dependencies and then create a dummy test app for the specs to run against.
+
+    $ bundle
+    $ bundle exec rake test_app
+    $ bundle exec rspec spec
+
+
 ## TODO
 
 * README with complete documentation
