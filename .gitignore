@@ -1,6 +1,8 @@
 \#*
 *~
 .#*
+*.gem
+Gemfile.lock
 .DS_Store
 .idea
 .project
