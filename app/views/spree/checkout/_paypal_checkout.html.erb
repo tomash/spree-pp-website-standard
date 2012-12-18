@@ -1,3 +1,5 @@
+<%- paypal_configuration = Spree::BillingIntegration::PaypalWebsiteStandard.first %>
+
 <%- if Rails.env.development?
       submit_url = Spree::PaypalWebsiteStandard::Config.sandbox_url
     else
@@ -6,9 +8,9 @@
 %>
 <%= form_tag submit_url do %> 
 
-  <%- if(Spree::Order.use_encrypted_paypal_link?) %>
+  <%- if(paypal_configuration.preferred_encryption) %>
     <%= hidden_field_tag(:cmd, "_s-xclick") %>
-    <%= hidden_field_tag(:encrypted, @order.paypal_encrypted(payment_notifications_url(:secret => Spree::PaypalWebsiteStandard::Config.ipn_secret))) %>
+    <%= hidden_field_tag(:encrypted, order.paypal_encrypted(paypal_configuration, payment_notifications_url(:secret => paypal_configuration.preferred_ipn_secret)))) %>
   <% else %>
   
     <input id="page_style" name="page_style" type="hidden" value="<%= Spree::PaypalWebsiteStandard::Config.page_style %>"/>

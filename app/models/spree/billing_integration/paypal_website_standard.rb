@@ -12,7 +12,8 @@ class Spree::BillingIntegration::PaypalWebsiteStandard < Spree::BillingIntegrati
   #production paypal_url: https://www.paypal.com/cgi-bin/webscr
   preference :paypal_url, :string, :default => 'https://www.sandbox.paypal.com/cgi-bin/webscr'
   preference :encryption, :boolean, :default => false
-  preference :certificate_id, :string
+  preference :certificate_id, :string, :default => ''
+  preference :ipn_secret, :string, :default => ''
   preference :currency, :string, :default => "USD"
   preference :language, :string, :default => "en"
 
