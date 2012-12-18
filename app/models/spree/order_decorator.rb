@@ -3,8 +3,8 @@ Spree::Order.class_eval do
   
   # SSL certificates for encrypting paypal link
   PAYPAL_CERT_PEM = "#{Rails.root}/certs/paypal_cert_#{Rails.env}.pem"
-  APP_CERT_PEM = "#{Rails.root}/certs/app_cert.pem"
-  APP_KEY_PEM = "#{Rails.root}/certs/app_key.pem"
+  APP_CERT_PEM = "#{Rails.root}/certs/app_cert_#{Rails.env}.pem"
+  APP_KEY_PEM = "#{Rails.root}/certs/app_key_#{Rails.env}.pem"
   def shipment_cost
     adjustment_total - credit_total
   end
