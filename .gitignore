@@ -10,3 +10,5 @@ tmp
 nbproject
 *.swp
 spec/dummy
+.ruby-version
+.ruby-gemset

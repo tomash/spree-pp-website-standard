@@ -20,3 +20,9 @@
 
 * Ported for >= Spree 1.0.0
 * Fixed mistyped configuration variables
+
+
+2.4.0
+-----
+
+* Ported for Spree 2.4.x
