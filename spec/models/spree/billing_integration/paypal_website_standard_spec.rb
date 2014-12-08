@@ -9,12 +9,12 @@ describe Spree::BillingIntegration::PaypalWebsiteStandard do
   it "has required fields" do
     ["account_email", "success_url", "paypal_url", "certificate_id"].each do |key|
       @pws.send("preferred_#{key}=", 'test')
-      @pws.send("preferred_#{key}").should eq 'test'
+      expect(@pws.send("preferred_#{key}")).to eq 'test'
     end
   end
 
   it "be compatible with spree gateway API" do
-    @pws.payment_profiles_supported?.should be_false
+    expect(@pws.payment_profiles_supported?).to eq false
   end
 
 end

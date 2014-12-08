@@ -1,10 +1,5 @@
 class Spree::BillingIntegration::PaypalWebsiteStandard < Spree::BillingIntegration
 
-  attr_accessible :preferred_account_email, :preferred_ipn_notify_host, :preferred_success_url, 
-    :preferred_paypal_url, :preferred_encryption, :preferred_certificate_id, 
-    :preferred_currency, :preferred_language,
-    :preferred_server, :preferred_test_mode
-
   preference :account_email, :string
   preference :ipn_notify_host, :string
   preference :success_url, :string
