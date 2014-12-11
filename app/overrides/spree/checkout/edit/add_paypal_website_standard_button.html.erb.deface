@@ -1,0 +1,8 @@
+<!-- insert_bottom '[data-hook="checkout_form_wrapper"]' -->
+<div class="" id="paypal-website-standard-payment" data-hook="paypal-website-standard-button">
+  <% if(@order.state == "payment" && @order.payable_via_paypal?) %>
+    <% method = Spree::Order.paypal_payment_method %>
+    <%= render :partial => "spree/checkout/payment/#{method.method_type}", :locals => { :payment_method => method } %>
+  <% end %>
+</div>
+

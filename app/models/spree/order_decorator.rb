@@ -14,7 +14,7 @@ Spree::Order.class_eval do
   end
   
   def self.paypal_payment_method
-    PaymentMethod.select{ |pm| pm.name.downcase =~ /paypal/}.first
+    Spree::PaymentMethod.select{ |pm| pm.name.downcase =~ /paypal/}.first
   end
   
   # commented-out, will be removed
