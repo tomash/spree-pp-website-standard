@@ -1,5 +1,8 @@
 source 'http://rubygems.org'
 
+# until we start depending on version released on rubygems again
+gem 'spree', github: 'spree/spree', branch: 'master'
+
 group :test do
   gem 'capybara', '~> 2.4'
   gem 'database_cleaner', '~> 1.3'
