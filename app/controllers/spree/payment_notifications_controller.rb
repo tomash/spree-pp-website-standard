@@ -27,25 +27,31 @@ module Spree
         
         # payment.amount = order.read_attribute(:total)
         payment.amount = params[:mc_gross].to_f
-        logger.info "PayPal_Website_Standard: set payment.amount to #{payment.amount} based on order's total #{order.read_attribute(:total)}"
+        logger.info "PayPal_Website_Standard: set payment.amount to #{payment.amount} based on IPN mc_gross value"
         
         payment.payment_method = Spree::Order.paypal_payment_method
         order.payments << payment
         payment.started_processing
         
         payment.complete!
-        logger.info("PayPal_Website_Standard: order #{order.number} (#{order.id}) -- completed payment")
+        logger.info "PayPal_Website_Standard: order #{order.number} (#{order.id}) -- completed payment"
         @order.reload # otherwise it might not see the newly added payment
         @order.update!
         if @order.can_go_to_state?("complete")
-          until @order.state == "complete"
-            @order.next!
-            @order.update!
-            state_callback(:after)
+          begin
+            until @order.state == "complete"
+              # this is bad and I feel bad
+              # not-full-amount payments should be handled differently
+              @order.next!
+              @order.update!
+              state_callback(:after)
+            end
+          rescue StateMachine::InvalidTransition
+            # couldn't transition, order is not paid fully
           end
         end
 
-        logger.info("PayPal_Website_Standard: Order #{order.number} (#{order.id}) updated successfully, IPN complete")
+        logger.info "PayPal_Website_Standard: Order #{order.number} (#{order.id}) updated successfully, IPN complete"
       end
       
       render :nothing => true
